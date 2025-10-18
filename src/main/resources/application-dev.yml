@@ -1,0 +1,31 @@
+# ===================================================================
+# CONTAINER MEASURE SERVICE - Perfil de Desenvolvimento - H2 Database
+# ===================================================================
+spring:
+  datasource:
+    url: jdbc:h2:mem:container_measure_db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration/h2
+    baseline-on-migrate: true
+
+logging:
+  level:
+    sql: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE

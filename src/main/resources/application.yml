@@ -1,0 +1,47 @@
+# ===================================================================
+# CONTAINER MEASURE SERVICE - Base Configuration
+# ===================================================================
+server:
+  port: 9093
+  servlet:
+    context-path: /api/v1
+
+spring:
+  application:
+    name: container-measure-service
+  profiles:
+    active: dev
+
+# --- Eureka Client Configuration
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost
+    prefer-ip-address: true
+    instance-id: container-measure-service:local
+#    instance-id: ${spring.application.name}:${spring.profiles.active}:${server.port}
+
+# --- Actuator Configuration
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, metrics
+  endpoint:
+    health:
+      show-details: ALWAYS
+
+# --- Logging Configuration
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    com.taptrack.containermeasureservice: DEBUG
+  pattern:
+    console: "%clr(%d{yyyy-MM-dd HH:mm:ss}){faint} %clr([%thread]){magenta} %clr(%-5level){blue} %clr(%logger{36}){cyan} - %msg%n"
+
+
