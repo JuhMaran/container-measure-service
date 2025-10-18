@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="30 seconds">
+
+    <!-- ========================================================= -->
+    <!--   LOGBACK CONFIGURATION - CONTAINER MEASURE SERVICE       -->
+    <!-- ========================================================= -->
+
+    <springProperty scope="context" name="LOG_PATH" source="LOG_PATH" defaultValue="logs"/>
+    <springProperty scope="context" name="APP_NAME" source="spring.application.name"
+                    defaultValue="container-measure-service"/>
+
+    <!-- ===================== APPENDERS ========================== -->
+
+    <!-- Console appender with colorized output -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>
+                %clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} |
+                %clr([%thread]){magenta} |
+                %clr(%-5level){blue} |
+                %clr(%logger{36}){cyan} :
+                %clr(%msg){white}%n
+            </pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!-- File appender with daily rotation -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/${APP_NAME}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/archive/${APP_NAME}-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>15</maxHistory>
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!-- ===================== LOG LEVELS ========================== -->
+
+    <logger name="org.springframework" level="INFO"/>
+    <logger name="org.hibernate.SQL" level="DEBUG"/>
+    <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/>
+    <logger name="com.taptrack.containermeasureservice" level="DEBUG"/>
+
+    <!-- ===================== ROOT LOGGER ========================= -->
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+    </root>
+
+</configuration>
