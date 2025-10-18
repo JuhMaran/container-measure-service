@@ -11,7 +11,7 @@
 	<groupId>com.taptrack</groupId>
 	<artifactId>container-measure-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Container Measure Service</name>
+	<name>container-measure-service</name>
 	<description>Microsserviço responsável por gerenciar tamanhos padronizados de copos, garrafas e outros recipientes utilizados em choperias e estabelecimentos de bebidas.</description>
 	<url/>
 	<licenses>
@@ -46,6 +46,14 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-mysql</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>

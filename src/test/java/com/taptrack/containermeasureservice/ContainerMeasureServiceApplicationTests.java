@@ -1,4 +1,4 @@
-package com.taptrack.container_measure_service;
+package com.taptrack.containermeasureservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
