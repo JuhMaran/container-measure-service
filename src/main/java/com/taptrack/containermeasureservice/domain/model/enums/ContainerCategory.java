@@ -7,4 +7,8 @@ package com.taptrack.containermeasureservice.domain.model.enums;
  * @since 18/10/2025
  */
 public enum ContainerCategory {
+  GLASS,
+  BOTTLE,
+  GROWLER,
+  KEG
 }
