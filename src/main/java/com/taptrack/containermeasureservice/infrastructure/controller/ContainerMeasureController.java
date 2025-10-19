@@ -19,6 +19,7 @@ import java.util.List;
  * @author Juliane Maran
  * @since 18/10/2025
  */
+@CrossOrigin("http://localhost:4200")
 @RestController
 @RequestMapping("/container-measures")
 @RequiredArgsConstructor

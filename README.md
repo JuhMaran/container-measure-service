@@ -10,6 +10,27 @@ choperias e estabelecimentos de bebidas.
 * Java 25
 * Spring Boot 3.5.6
 * Maven 3.9.11
+[README.md](README.md)
+URL H2 Database: http://localhost:9093/api/v1/h2-console
+
+* **Saved Settings:** Generic H2 (Embedded)
+* **Setting Name:** Generic H2 (Embedded)
+* **Driver Class:** org.h2.Driver
+* **JDBC URL:** jdbc:h2:mem:container_measure_db
+* **User Name:** sa
+* **Password:** <Deixar em Branco>
+* "Connect" ou "Test Connection"
+
+```sql
+SELECT * FROM CONTAINER_MEASURE
+SELECT * FROM "flyway_schema_history"
+```
+
+**Tabela:** CONTAINER_MEASURE
+
+| ID  | VERSION | CATEGORY | TYPE     | VOLUME_ML | DESCRIPTION               | ACTIVE | CREATED_DATE                 | UPDATE_DATE                  |
+|:----|:--------|:---------|:---------|:----------|:--------------------------|:-------|:-----------------------------|:-----------------------------|
+| `1` | `0`     | `GLASS`  | `TASTER` | `100`     | `Copo degustação pequeno` | `TRUE` | `2025-10-18 20:58:09.389932` | `2025-10-18 20:58:09.389932` |
 
 ---
 

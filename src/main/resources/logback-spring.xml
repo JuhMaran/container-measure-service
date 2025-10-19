@@ -7,7 +7,7 @@
 
     <!-- Padrão para console -->
     <property name="CONSOLE_PATTERN"
-              value="%d{HH:mm:ss.SSS} %-5level [%thread] %logger{36} - %msg%n"/>
+              value="%d{HH:mm:ss.SSS} %highlight(%-5level) [%cyan(%thread)] %magenta(%logger{36}) - %msg%n"/>
 
     <!-- Padrão para arquivo -->
     <property name="FILE_PATTERN"

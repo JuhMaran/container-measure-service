@@ -2,7 +2,7 @@
 # CONTAINER MEASURE SERVICE - Base Configuration
 # ===================================================================
 server:
-  port: 9093
+  port: 8093
   servlet:
     context-path: /api/v1
 

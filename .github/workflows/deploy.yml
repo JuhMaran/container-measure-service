@@ -1,64 +1,64 @@
-name: Deploy Container Measure Service
-
-on:
-  workflow_dispatch:
-  push:
-    branches:
-      - main
-      - development
-
-env:
-  # ==== Metadados da Aplicação ====
-  APP_NAME: container-measure-service
-  JAVA_VERSION: 25
-  SPRING_BOOT_VERSION: 3.5.6
-
-  # ==== Docker Config ====
-  DOCKER_IMAGE: container-measure-service
-  APP_PORT: 9093
-
-  # ==== GitHub Packages ====
-  GITHUB_ACTOR: JuhMaran
-  GITHUB_TOKEN: ${{ secrets.LIB_TOKEN }}
-
-  # ==== Maven ====
-  MAVEN_OPTS: "-Xmx1024m -Djava.awt.headless=true"
-
-jobs:
-  build:
-    name: Build & Verify Environment Variables
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Verify environment variables
-        run: |
-          echo "Aplicação: $APP_NAME"
-          echo "Java Version: $JAVA_VERSION"
-          echo "Spring Boot: $SPRING_BOOT_VERSION"
-          echo "Docker Image: $DOCKER_IMAGE"
-          echo "GitHub Actor: $GITHUB_ACTOR"
-          echo "Maven options: $MAVEN_OPTS"
-          echo "Variáveis carregadas com sucesso"
-
-      # Etapa opcional: Testar o settings.xml localmente (sem build completo)
-      - name: Test Maven Settings
-        run: |
-          echo "📄 Testando acesso ao GitHub Packages..."
-          mvn -B help:effective-settings \
-            --settings ./settings.xml \
-            -DshowProfiles=true \
-            -DshowPasswords=false
-
-      # Etapa opcional: Mostrar o Dockerfile utilizado
-      - name: Show Dockerfile
-        run: cat Dockerfile
-
-      # Etapa opcional: Validar Docker Build (somente variáveis)
-      - name: Validate Docker build arguments
-        run: |
-          echo "Simulação de build Docker com variáveis:"
-          echo "docker build --build-arg APP_NAME=${APP_NAME} --build-arg APP_PORT=${APP_PORT} ."
-
+#name: Deploy Container Measure Service
+#
+#on:
+#  workflow_dispatch:
+#  push:
+#    branches:
+#      - main
+#      - development
+#
+#env:
+#  # ==== Metadados da Aplicação ====
+#  APP_NAME: container-measure-service
+#  JAVA_VERSION: 25
+#  SPRING_BOOT_VERSION: 3.5.6
+#
+#  # ==== Docker Config ====
+#  DOCKER_IMAGE: container-measure-service
+#  APP_PORT: 9093
+#
+#  # ==== GitHub Packages ====
+#  GITHUB_ACTOR: JuhMaran
+#  GITHUB_TOKEN: ${{ secrets.LIB_TOKEN }}
+#
+#  # ==== Maven ====
+#  MAVEN_OPTS: "-Xmx1024m -Djava.awt.headless=true"
+#
+#jobs:
+#  build:
+#    name: Build & Verify Environment Variables
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: Checkout repository
+#        uses: actions/checkout@v4
+#
+#      - name: Verify environment variables
+#        run: |
+#          echo "Aplicação: $APP_NAME"
+#          echo "Java Version: $JAVA_VERSION"
+#          echo "Spring Boot: $SPRING_BOOT_VERSION"
+#          echo "Docker Image: $DOCKER_IMAGE"
+#          echo "GitHub Actor: $GITHUB_ACTOR"
+#          echo "Maven options: $MAVEN_OPTS"
+#          echo "Variáveis carregadas com sucesso"
+#
+#      # Etapa opcional: Testar o settings.xml localmente (sem build completo)
+#      - name: Test Maven Settings
+#        run: |
+#          echo "📄 Testando acesso ao GitHub Packages..."
+#          mvn -B help:effective-settings \
+#            --settings ./settings.xml \
+#            -DshowProfiles=true \
+#            -DshowPasswords=false
+#
+#      # Etapa opcional: Mostrar o Dockerfile utilizado
+#      - name: Show Dockerfile
+#        run: cat Dockerfile
+#
+#      # Etapa opcional: Validar Docker Build (somente variáveis)
+#      - name: Validate Docker build arguments
+#        run: |
+#          echo "Simulação de build Docker com variáveis:"
+#          echo "docker build --build-arg APP_NAME=${APP_NAME} --build-arg APP_PORT=${APP_PORT} ."
+#
