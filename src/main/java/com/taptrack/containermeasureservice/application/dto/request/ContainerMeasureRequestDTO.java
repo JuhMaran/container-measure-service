@@ -13,17 +13,18 @@ import jakarta.validation.constraints.Size;
  * @since 18/10/2025
  */
 public record ContainerMeasureRequestDTO(
-  @NotNull(message = "Campo categoria é obrigatório")
+  // TODO: Incluir mensagens de validação nas anotações, em Português
+  @NotNull
   ContainerCategory category,
 
-  @NotNull(message = "Campo tipo é obrigatório")
+  @NotNull
   ContainerType type,
 
-  @NotNull(message = "Campo volume em ml é obrigatório")
-  @Positive(message = "Deve informar um valor positivo acima de zero")
+  @NotNull
+  @Positive
   Integer volumeMl,
 
-  @Size(max = 255, message = "Deve conter no máximo 255 caracteres")
+  @Size(max = 255)
   String description
 ) {
 }
