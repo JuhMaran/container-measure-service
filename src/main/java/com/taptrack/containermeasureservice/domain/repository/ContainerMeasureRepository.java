@@ -4,6 +4,7 @@ import com.taptrack.containermeasureservice.domain.model.ContainerMeasure;
 import com.taptrack.containermeasureservice.domain.model.enums.ContainerCategory;
 import com.taptrack.containermeasureservice.domain.model.enums.ContainerType;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -21,6 +22,12 @@ public interface ContainerMeasureRepository extends JpaRepository<ContainerMeasu
 
   List<ContainerMeasure> findByType(ContainerType type);
 
-  List<ContainerMeasure> findByActiveTrue();
+  List<ContainerMeasure> findByActive(Boolean active);
+
+  // Combinando filtros
+  List<ContainerMeasure> findByCategoryAndTypeAndActive(
+    ContainerCategory category,
+    ContainerType type,
+    Boolean active);
 
 }

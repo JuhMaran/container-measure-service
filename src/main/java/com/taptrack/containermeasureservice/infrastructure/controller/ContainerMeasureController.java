@@ -46,11 +46,10 @@ public class ContainerMeasureController {
   @GetMapping
   public ResponseEntity<List<ContainerMeasureResponseDTO>> findAll(
     @RequestParam(required = false) ContainerCategory category,
-    @RequestParam(required = false) ContainerType type
+    @RequestParam(required = false) ContainerType type,
+    @RequestParam(required = false) Boolean active
   ) {
-    if (category != null) return ResponseEntity.ok(service.findByCategory(category));
-    if (type != null) return ResponseEntity.ok(service.findByType(type));
-    return ResponseEntity.ok(service.findAll());
+    return ResponseEntity.ok(service.findByFilters(category, type, active));
   }
 
   @DeleteMapping("/{id}")
