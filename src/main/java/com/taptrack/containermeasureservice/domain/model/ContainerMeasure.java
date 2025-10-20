@@ -40,15 +40,26 @@ public class ContainerMeasure {
   @Column(nullable = false)
   private Integer volumeMl;
 
-  @Column(length = 255)
   private String description;
 
   @Column(nullable = false)
   private Boolean active = true;
 
-  @Column(updatable = false)
-  private LocalDateTime createdDate = LocalDateTime.now();
+  @Column(nullable = false, updatable = false)
+  private LocalDateTime createdDate;
 
-  private LocalDateTime updateDate = LocalDateTime.now();
+  @Column(nullable = false)
+  private LocalDateTime updateDate;
+
+  @PrePersist
+  protected void onCreate() {
+    this.createdDate = LocalDateTime.now();
+    this.updateDate = LocalDateTime.now();
+  }
+
+  @PreUpdate
+  protected void onUpdate() {
+    this.updateDate = LocalDateTime.now();
+  }
 
 }
