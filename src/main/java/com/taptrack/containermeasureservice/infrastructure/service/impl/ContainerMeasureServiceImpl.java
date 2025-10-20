@@ -67,21 +67,39 @@ public class ContainerMeasureServiceImpl implements ContainerMeasureService {
   }
 
   @Override
-  @Transactional(readOnly = true)
   public List<ContainerMeasureResponseDTO> findAll() {
     return mapper.toResponseList(repository.findAll());
   }
 
   @Override
-  @Transactional(readOnly = true)
   public List<ContainerMeasureResponseDTO> findByCategory(ContainerCategory category) {
     return mapper.toResponseList(repository.findByCategory(category));
   }
 
   @Override
-  @Transactional(readOnly = true)
   public List<ContainerMeasureResponseDTO> findByType(ContainerType type) {
     return mapper.toResponseList(repository.findByType(type));
+  }
+
+  @Override
+  public List<ContainerMeasureResponseDTO> findByActive(Boolean active) {
+    return mapper.toResponseList(repository.findByActive(active));
+  }
+
+  @Override
+  @Transactional(readOnly = true)
+  public List<ContainerMeasureResponseDTO> findByFilters(ContainerCategory category, ContainerType type, Boolean active) {
+    if (category != null && type != null && active != null) {
+      return mapper.toResponseList(repository.findByCategoryAndTypeAndActive(category, type, active));
+    }
+
+    if (category != null) return findByCategory(category);
+
+    if (type != null) return findByType(type);
+
+    if (active != null) return findByActive(active);
+
+    return findAll();
   }
 
 }

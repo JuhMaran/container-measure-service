@@ -158,11 +158,11 @@
             <version>${httpclient5.version}</version>
         </dependency>
         <!-- Biblioteca de Exception Personalizada -->
-        <dependency>
-            <groupId>com.julianemaran.libraries</groupId>
-            <artifactId>custom-exceptions</artifactId>
-            <version>${lib.custom-exceptions.version}</version>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>com.julianemaran.libraries</groupId>-->
+        <!--            <artifactId>custom-exceptions</artifactId>-->
+        <!--            <version>${lib.custom-exceptions.version}</version>-->
+        <!--        </dependency>-->
         <!-- Test -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

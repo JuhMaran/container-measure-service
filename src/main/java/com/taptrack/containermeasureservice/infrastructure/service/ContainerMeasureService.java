@@ -29,4 +29,8 @@ public interface ContainerMeasureService {
 
   List<ContainerMeasureResponseDTO> findByType(ContainerType type);
 
+  List<ContainerMeasureResponseDTO> findByActive(Boolean active);
+
+  List<ContainerMeasureResponseDTO> findByFilters(ContainerCategory category, ContainerType type, Boolean active);
+
 }

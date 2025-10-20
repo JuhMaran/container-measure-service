@@ -1,6 +1,6 @@
-# ===================================================================
-# CONTAINER MEASURE SERVICE - Base Configuration
-# ===================================================================
+# ============================================
+# CONTAINER MEASURE SERVICE - application.yml
+# ============================================
 server:
   port: 8093
   servlet:
@@ -18,12 +18,10 @@ eureka:
     fetch-registry: true
     register-with-eureka: true
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://localhost:8761/eureka/}
   instance:
-    hostname: localhost
     prefer-ip-address: true
-    instance-id: container-measure-service:local
-#    instance-id: ${spring.application.name}:${spring.profiles.active}:${server.port}
+    instance-id: ${spring.application.name}:${random.value}
 
 # --- Actuator Configuration
 management:
@@ -38,8 +36,6 @@ management:
 # --- Logging Configuration
 logging:
   level:
+    web: INFO
     root: INFO
-    org.springframework.web: INFO
     com.taptrack.containermeasureservice: DEBUG
-  pattern:
-    console: "%clr(%d{yyyy-MM-dd HH:mm:ss}){faint} %clr([%thread]){magenta} %clr(%-5level){blue} %clr(%logger{36}){cyan} - %msg%n"

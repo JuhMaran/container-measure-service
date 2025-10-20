@@ -5,13 +5,38 @@ choperias e estabelecimentos de bebidas.
 
 ---
 
+## Executar a Aplicação
+
+### Usando Docker
+
+1. Acessar o `wsl`
+2. Build Manual: `docker build -t container-measure-service .`
+3. Rodar container: `docker run -p 8093:8093 container-measure-service`
+4. Logs em tempo real: `docker logs -f <container-id>`
+
+### Rede Docker
+
+Se quiser que os serviços conversem entre si localmente
+
+```bash
+docker network create taptrack-net
+docker run -d --network taptrack-net --name eureka eureka-server
+docker run -d --network taptrack-net --name gateway api-gateway
+docker run -d --network taptrack-net --name container-measure container-measure-service
+docker run -d --network taptrack-net --name frontend -p 4200:4200 taptrack-frontend
+```
+
+---
+
 ## Tecnologias
 
 * Java 25
 * Spring Boot 3.5.6
 * Maven 3.9.11
-[README.md](README.md)
-URL H2 Database: http://localhost:9093/api/v1/h2-console
+  [README.md](README.md)
+  URL H2 Database: http://localhost:9093/api/v1/h2-console
+
+---
 
 * **Saved Settings:** Generic H2 (Embedded)
 * **Setting Name:** Generic H2 (Embedded)
@@ -159,7 +184,7 @@ spring:
 
 ## Exemplos de Request e Responses
 
-### GET
+### GET - Listar todos
 
 **Request**
 
@@ -334,3 +359,180 @@ curl --location 'http://localhost:9093/api/v1/container-measures'
 ]
 ```
 
+### GET - Buscar com Filtro
+
+**Request**
+
+* Filtrar por: Categoria
+
+```
+curl --location 'http://localhost:8080/api/v1/container-measures?category=BOTTLE'
+```
+
+* Filtrar por: Tipo
+
+```
+curl --location 'http://localhost:8080/api/v1/container-measures?type=HALF'
+```
+
+* Filtrar por: Disponibilidade
+
+```
+curl --location 'http://localhost:8080/api/v1/container-measures?active=true'
+```
+
+* Filtrar por: Categoria, Tipo e Disponibilidade
+
+```
+curl --location 'http://localhost:8080/api/v1/container-measures?category=GLASS&type=PINT&active=true'
+```
+
+* Filtrar por: ID
+
+```
+curl --location 'http://localhost:8080/api/v1/container-measures/2'
+```
+
+**Response**
+
+* Filtrar por: Categoria (BOTTLE)
+
+```json
+[
+  {
+    "id": 9,
+    "category": "BOTTLE",
+    "type": "STUBBY",
+    "volumeMl": 330,
+    "description": "Garrafa padrão 330 ml",
+    "active": true,
+    "createdDate": "2025-10-19T19:24:05.788425",
+    "updateDate": "2025-10-19T19:24:05.788425"
+  },
+  {
+    "id": 10,
+    "category": "BOTTLE",
+    "type": "BOMBER",
+    "volumeMl": 650,
+    "description": "Garrafa 650 ml",
+    "active": true,
+    "createdDate": "2025-10-19T19:24:05.788425",
+    "updateDate": "2025-10-19T19:24:05.788425"
+  },
+  {
+    "id": 11,
+    "category": "BOTTLE",
+    "type": "CROWLER",
+    "volumeMl": 950,
+    "description": "Lata grande de 950 ml (crowler)",
+    "active": true,
+    "createdDate": "2025-10-19T19:24:05.788425",
+    "updateDate": "2025-10-19T19:24:05.788425"
+  },
+  {
+    "id": 12,
+    "category": "BOTTLE",
+    "type": "HOWLER",
+    "volumeMl": 950,
+    "description": "Garrafa intermediária de 950 ml",
+    "active": true,
+    "createdDate": "2025-10-19T19:24:05.788425",
+    "updateDate": "2025-10-19T19:24:05.788425"
+  },
+  {
+    "id": 13,
+    "category": "BOTTLE",
+    "type": "GROWLER",
+    "volumeMl": 1890,
+    "description": "Garrafa refill de 1.89 litros",
+    "active": true,
+    "createdDate": "2025-10-19T19:24:05.788425",
+    "updateDate": "2025-10-19T19:24:05.788425"
+  }
+]
+```
+
+* Filtrar por: Tipo (HALF)
+
+```json
+[
+  {
+    "id": 2,
+    "category": "GLASS",
+    "type": "HALF",
+    "volumeMl": 250,
+    "description": "Copo pequeno de 250 ml",
+    "active": true,
+    "createdDate": "2025-10-19T19:24:05.788425",
+    "updateDate": "2025-10-19T19:24:05.788425"
+  }
+]
+```
+
+* Filtrar por: Categoria, Tipo e Disponibilidade
+
+```json
+[
+  {
+    "id": 3,
+    "category": "GLASS",
+    "type": "PINT",
+    "volumeMl": 473,
+    "description": "Copo americano padrão 16 oz",
+    "active": true,
+    "createdDate": "2025-10-19T19:24:05.788425",
+    "updateDate": "2025-10-19T19:24:05.788425"
+  }
+]
+```
+
+* Filtrar por: ID (2)
+
+```json
+{
+  "id": 2,
+  "category": "GLASS",
+  "type": "HALF",
+  "volumeMl": 250,
+  "description": "Copo pequeno de 250 ml",
+  "active": true,
+  "createdDate": "2025-10-19T19:24:05.788425",
+  "updateDate": "2025-10-19T19:24:05.788425"
+}
+```
+
+### POST - Cadastrar
+
+**Request**
+
+```
+```
+
+**Response**
+
+```json
+```
+
+### PUT - Atualizar
+
+**Request**
+
+```
+```
+
+**Response**
+
+```json
+```
+
+### DELETE - Excluir
+
+**Request**
+
+```
+```
+
+**Response**
+
+```json
+```
