@@ -5,6 +5,29 @@ choperias e estabelecimentos de bebidas.
 
 ---
 
+## Executar a Aplicação
+
+### Usando Docker
+
+1. Acessar o `wsl`
+2. Build Manual: `docker build -t container-measure-service .`
+3. Rodar container: `docker run -p 8093:8093 container-measure-service`
+4. Logs em tempo real: `docker logs -f <container-id>`
+
+### Rede Docker
+
+Se quiser que os serviços conversem entre si localmente
+
+```bash
+docker network create taptrack-net
+docker run -d --network taptrack-net --name eureka eureka-server
+docker run -d --network taptrack-net --name gateway api-gateway
+docker run -d --network taptrack-net --name container-measure container-measure-service
+docker run -d --network taptrack-net --name frontend -p 4200:4200 taptrack-frontend
+```
+
+---
+
 ## Tecnologias
 
 * Java 25
@@ -12,6 +35,8 @@ choperias e estabelecimentos de bebidas.
 * Maven 3.9.11
   [README.md](README.md)
   URL H2 Database: http://localhost:9093/api/v1/h2-console
+
+---
 
 * **Saved Settings:** Generic H2 (Embedded)
 * **Setting Name:** Generic H2 (Embedded)

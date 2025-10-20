@@ -7,6 +7,7 @@ import com.taptrack.containermeasureservice.domain.model.enums.ContainerType;
 import com.taptrack.containermeasureservice.infrastructure.service.ContainerMeasureService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,10 +20,11 @@ import java.util.List;
  * @author Juliane Maran
  * @since 18/10/2025
  */
-@CrossOrigin("http://localhost:4200")
+@Slf4j
 @RestController
-@RequestMapping("/container-measures")
 @RequiredArgsConstructor
+@RequestMapping("/container-measures")
+@CrossOrigin("http://localhost:4200")
 public class ContainerMeasureController {
 
   private final ContainerMeasureService service;
@@ -40,7 +42,11 @@ public class ContainerMeasureController {
 
   @GetMapping("/{id}")
   public ResponseEntity<ContainerMeasureResponseDTO> findById(@PathVariable Long id) {
-    return ResponseEntity.ok(service.findById(id));
+    log.info("[ContainerMeasureController] GET /container-measures/{}", id);
+    var response = service.findById(id);
+    log.info("[ContainerMeasureController] Retornando: {}", response);
+    return ResponseEntity.ok(response);
+
   }
 
   @GetMapping
