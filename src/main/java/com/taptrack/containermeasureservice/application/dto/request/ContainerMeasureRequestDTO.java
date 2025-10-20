@@ -13,18 +13,18 @@ import jakarta.validation.constraints.Size;
  * @since 18/10/2025
  */
 public record ContainerMeasureRequestDTO(
-  // TODO: Incluir mensagens de validação nas anotações, em Português
-  @NotNull
+
+  @NotNull(message = "A categoria do recipiente é obrigatória.")
   ContainerCategory category,
 
-  @NotNull
+  @NotNull(message = "O tipo de recipiente é obrigatório.")
   ContainerType type,
 
-  @NotNull
-  @Positive
+  @NotNull(message = "O volume do recipiente é obrigatório.")
+  @Positive(message = "O volume deve ser um número positivo em mililitros.")
   Integer volumeMl,
 
-  @Size(max = 255)
+  @Size(max = 255, message = "A descrição deve conter no máximo 255 caracteres.")
   String description
 ) {
 }
