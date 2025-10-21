@@ -1,13 +1,16 @@
 package com.taptrack.containermeasureservice.infrastructure.controller;
 
+import com.taptrack.containermeasureservice.application.dto.request.ContainerMeasureFilterDTO;
 import com.taptrack.containermeasureservice.application.dto.request.ContainerMeasureRequestDTO;
 import com.taptrack.containermeasureservice.application.dto.response.ContainerMeasureResponseDTO;
 import com.taptrack.containermeasureservice.domain.model.enums.ContainerCategory;
 import com.taptrack.containermeasureservice.domain.model.enums.ContainerType;
+import com.taptrack.containermeasureservice.infrastructure.service.ContainerMeasureQueryService;
 import com.taptrack.containermeasureservice.infrastructure.service.ContainerMeasureService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +31,22 @@ import java.util.List;
 public class ContainerMeasureController {
 
   private final ContainerMeasureService service;
+  private final ContainerMeasureQueryService queryService;
+
+  @GetMapping("/list")
+  public Page<ContainerMeasureResponseDTO> list(
+    @RequestParam(required = false) ContainerCategory category,
+    @RequestParam(required = false) ContainerType type,
+    @RequestParam(required = false) Boolean active,
+    @RequestParam(required = false) Integer volume,
+    @RequestParam(required = false) Integer minVolume,
+    @RequestParam(required = false) Integer maxVolume,
+    @RequestParam(defaultValue = "0") int page,
+    @RequestParam(defaultValue = "10") int size
+  ) {
+    var filter = new ContainerMeasureFilterDTO(category, type, active, volume, minVolume, maxVolume, page, size);
+    return queryService.listMeasures(filter);
+  }
 
   @PostMapping
   public ResponseEntity<ContainerMeasureResponseDTO> create(@Valid @RequestBody ContainerMeasureRequestDTO dto) {

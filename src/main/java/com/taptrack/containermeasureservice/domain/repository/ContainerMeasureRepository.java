@@ -16,7 +16,8 @@ import java.util.List;
  * @since 18/10/2025
  */
 @Repository
-public interface ContainerMeasureRepository extends JpaRepository<ContainerMeasure, Long> {
+public interface ContainerMeasureRepository extends JpaRepository<ContainerMeasure, Long>,
+  JpaSpecificationExecutor<ContainerMeasure> {
 
   List<ContainerMeasure> findByCategory(ContainerCategory category);
 
@@ -29,5 +30,7 @@ public interface ContainerMeasureRepository extends JpaRepository<ContainerMeasu
     ContainerCategory category,
     ContainerType type,
     Boolean active);
+
+  boolean existsByCategoryAndTypeAndVolumeMl(ContainerCategory category, ContainerType type, Integer volumeMl);
 
 }

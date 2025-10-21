@@ -7,7 +7,7 @@ import com.taptrack.containermeasureservice.domain.model.ContainerMeasure;
 import com.taptrack.containermeasureservice.domain.model.enums.ContainerCategory;
 import com.taptrack.containermeasureservice.domain.model.enums.ContainerType;
 import com.taptrack.containermeasureservice.domain.repository.ContainerMeasureRepository;
-import com.taptrack.containermeasureservice.exceptions.ResourcesNotFoundException;
+import com.taptrack.containermeasureservice.exceptions.ResourceConflictException;
 import com.taptrack.containermeasureservice.infrastructure.service.ContainerMeasureService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -47,7 +47,7 @@ public class ContainerMeasureServiceImpl implements ContainerMeasureService {
   @Transactional
   public ContainerMeasureResponseDTO update(Long id, ContainerMeasureRequestDTO dto) {
     ContainerMeasure entity = repository.findById(id)
-      .orElseThrow(() -> new ResourcesNotFoundException("Container measure not found with ID: " + id));
+      .orElseThrow(() -> new ResourceConflictException("Container measure not found with ID: " + id));
     mapper.updateEntityFromDto(dto, entity);
     return mapper.toResponse(repository.save(entity));
   }
@@ -63,7 +63,7 @@ public class ContainerMeasureServiceImpl implements ContainerMeasureService {
   public ContainerMeasureResponseDTO findById(Long id) {
     return repository.findById(id)
       .map(mapper::toResponse)
-      .orElseThrow(() -> new ResourcesNotFoundException("Container measure not found with ID: " + id));
+      .orElseThrow(() -> new ResourceConflictException("Container measure not found with ID: " + id));
   }
 
   @Override
