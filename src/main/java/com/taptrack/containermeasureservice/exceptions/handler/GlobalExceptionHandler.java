@@ -2,6 +2,7 @@ package com.taptrack.containermeasureservice.exceptions.handler;
 
 import com.taptrack.containermeasureservice.exceptions.*;
 import com.taptrack.containermeasureservice.exceptions.dto.ApiErrorResponse;
+import jakarta.ws.rs.InternalServerErrorException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -46,6 +47,11 @@ public class GlobalExceptionHandler {
 
   @ExceptionHandler(RuntimeException.class)
   public ResponseEntity<ApiErrorResponse> handleGenericException(RuntimeException ex, WebRequest request) {
+    return buildResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Erro interno no servidor.", request);
+  }
+
+  @ExceptionHandler(InternalServerErrorException.class)
+  public ResponseEntity<ApiErrorResponse> handleInternalServerErrorException(InternalServerErrorException ex, WebRequest request) {
     return buildResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Erro interno no servidor.", request);
   }
 

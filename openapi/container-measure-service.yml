@@ -1,0 +1,430 @@
+openapi: 3.0.4
+info:
+  title: Container Measure Service
+  version: 1.0.1
+  description: |-
+    Microsserviço responsável por gerenciar tamanhos padronizados de copos, garrafas e outros recipientes utilizados 
+    em choperias e estabelecimentos de bebidas. Permite cadastro, listagem, atualização, filtragem e (des)ativação de 
+    medidas com regras de negócio (validação categoria/tipo, volume mínimo/máximo, soft delete, auditoria).
+  termsOfService: https://taptrack.com/terms
+  contact:
+    name: Juliane Maran
+    email: apiteamjulianemaran@gmail.com
+    url: https://github.com/JuhMaran
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+externalDocs:
+  description: 'Documentação técnica do projeto no GitHub'
+  url: https://github.com/JuhMaran/container-measure-service
+servers:
+  - url: http://localhost:8093/api/v1
+    description: "Ambiente Local - Desenvolvimento"
+  - url: https://api.taptrack.com
+    description: "Ambiente de Produção"
+  - url: http://localhost:8080/api/v1
+    description: "API Gateway"
+  - url: http://localhost:4200/app
+    description: "Frontend"
+tags:
+  - name: Container Measures
+    description: EverythingOperações relacionadas ao gerenciamento de medidas de recipientes (CRUD e filtros).
+  - name: Health Check
+    description: Verificação de disponibilidade e status do microsserviço.
+
+paths:
+  /container-measures:
+    post:
+      tags:
+        - Container Measures
+      summary: Criar medida de recipiente
+      description: |
+        Cadastro de uma nova medida. Validações de negócio aplicadas:
+        - combinação única category + type + volumeMl
+        - volume mínimo 30ml e máximo 50000ml
+        - validação de compatibilidade entre category e type
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContainerMeasureRequestDTO'
+            examples:
+              createGlassPint:
+                value:
+                  category: GLASS
+                  type: PINT
+                  volumeMl: 473
+                  description: 'Copo americano padrão 16 oz'
+      responses:
+        '201':
+          description: 'Created - medida criada com sucesso'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContainerMeasureResponseDTO'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    get:
+      tags:
+        - Container Measures
+      summary: Listar medidas de recipientes
+      description: Lista paginada de medidas com filtros opcionais.
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/size'
+        - $ref: '#/components/parameters/sort'
+        - name: category
+          in: query
+          schema:
+            $ref: '#/components/schemas/ContainerCategory'
+        - name: type
+          in: query
+          schema:
+            $ref: '#/components/schemas/ContainerType'
+        - name: active
+          in: query
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: 'Lista paginada retornada com sucesso'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedContainerMeasureResponse'
+        '500':
+          description: 'Erro interno do servidor'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /container-measure/{id}:
+    get:
+      tags:
+        - Container Measures
+      summary: Buscar medida por ID
+      description: Buscar medida por ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 10
+      responses:
+        '200':
+          description: 'Medida encontrada'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContainerMeasureResponseDTO'
+        '404':
+          description: 'Medida não encontrada.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: 'Erro interno do servidor'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    put:
+      tags:
+        - Container Measures
+      summary: Atualizar medida existente (substituição completa)
+      description: Atualizar medida existente (substituição completa)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 10
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContainerMeasureRequestDTO'
+      responses:
+        '200':
+          description: 'Atualização bem-sucedida'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContainerMeasureResponseDTO'
+        '400':
+          description: 'Requisição inválida'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: 'Medida não encontrada.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: 'Conflito de unicidade'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: 'Erro interno do servidor'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    patch:
+      tags:
+        - Container Measures
+      summary: 'Atualização parcial da medida (ex.: ativar/desativar)'
+      description: 'Atualização parcial da medida (ex.: ativar/desativar)'
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 10
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                active:
+                  type: boolean
+                  example: false
+      responses:
+        '200':
+          description: 'Atualização parcial bem-sucedida'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContainerMeasureResponseDTO'
+        '400':
+          description: 'Requisição inválida'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: 'Medida não encontrada.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: 'Erro interno do servidor'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  parameters:
+    page:
+      name: page
+      in: query
+      description: Página (0-based)
+      schema:
+        type: integer
+        format: int32
+        minimum: 0
+        default: 0
+    size:
+      name: size
+      in: query
+      description: Tamanho da página
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+        maximum: 100
+        default: 10
+    sort:
+      name: sort
+      in: query
+      description: 'Campo(s) de ordenação. Formato: field,asc|desc. Ordenação padrão: category,type,volumeMl'
+      schema:
+        type: string
+
+  schemas:
+    ContainerMeasureRequestDTO:
+      type: object
+      required:
+        - category
+        - type
+        - volumeMl
+      properties:
+        category:
+          $ref: '#/components/schemas/ContainerCategory'
+        type:
+          $ref: '#/components/schemas/ContainerType'
+        volumeMl:
+          type: integer
+          format: int32
+          minimum: 30
+          maximum: 50000
+          example: 473
+        description:
+          type: string
+          maxLength: 255
+          example: "Copo americano padrão 16 oz"
+      description: |
+        DTO usado para criar ou atualizar medidas de recipientes. Regras:
+        - volume entre 30 e 50000 (ml)
+        - combinação category+type+volumeMl única (retorna 409 em conflito)
+        - validação de compatibilidade category <-> type (retorna 400 se incompatível)
+
+    ContainerMeasureResponseDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        category:
+          $ref: '#/components/schemas/ContainerCategory'
+        type:
+          $ref: '#/components/schemas/ContainerType'
+        volumeMl:
+          type: integer
+          format: int32
+          example: 473
+        description:
+          type: string
+          example: "Copo americano padrão 16 oz"
+        active:
+          type: boolean
+          example: true
+        createdDate:
+          type: string
+          format: date-time
+          example: 2025-10-21T10:00:00
+        updateDate:
+          type: string
+          format: date-time
+          example: 2025-10-21T12:00:00
+      description: "Response"
+
+    PagedContainerMeasureResponse:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContainerMeasureResponseDTO'
+        page:
+          type: integer
+          format: int32
+          description: Página atual (0-based)
+        size:
+          type: integer
+          format: int32
+          description: Tamanho da página
+        totalElements:
+          type: integer
+          format: int32
+        totalPages:
+          type: integer
+          format: int32
+      description: Resposta paginada compatível com Spring Page.
+
+    ErrorResponse:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        status:
+          type: integer
+          format: int32
+        erro:
+          type: string
+        message:
+          type: string
+        path:
+          type: string
+      description: "Retorno de erro"
+
+    ContainerCategory:
+      type: string
+      enum:
+        - GLASS
+        - BOTTLE
+        - GROWLER
+        - KEG
+      description: "Categoria de recipientes"
+
+    ContainerType:
+      type: string
+      enum: [ TASTER, HALF, PINT, IMPERIAL_PINT, TULIP, SNIFTER, WEIZEN, STEIN, MINI_GROWLER, STUBBY, BOMBER,
+              CROWLER, HOWLER, GROWLER, MINI_KEG ]
+      description: |
+        Tipos possíveis. Observação: algumas combinações não fazem sentido (ex.: STUBBY com KEG).
+        A validação de compatibilidade category <-> type deve ocorrer na camada de serviço e retornar 400 (Bad Request) 
+        quando não compatível. Exemplos de compatibilidade:
+        - GLASS: TASTER, HALF, PINT, IMPERIAL_PINT, TULIP, SNIFTER, WEIZEN, STEIN, MINI_GROWLER
+        - BOTTLE: STUBBY, BOMBER, CROWLER, HOWLER, GROWLER
+        - KEG: MINI_KEG, GROWLER, CROWLER
+
+  responses:
+    BadRequest:
+      description: Requisição inválida
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFound:
+      description: Recurso Não Encontrado
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Conflict:
+      description: Conflito de negócio (unicidade)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    ServerError:
+      description: Erro Interno
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

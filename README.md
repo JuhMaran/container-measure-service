@@ -5,6 +5,14 @@ choperias e estabelecimentos de bebidas.
 
 ---
 
+## Acessar
+
+* Acessar Swagger UI: http://localhost:8093/api/v1/swagger-ui/index.html
+* Acessar JSON da OpenAPI: http://localhost:8093/api/v1/v3/api-docs
+* Acessar YAML da OpenAPI: http://localhost:8093/v3/api-docs.yaml
+
+---
+
 ## Executar a Aplicação
 
 ### Usando Docker
@@ -182,357 +190,169 @@ spring:
 
 ---
 
-## Exemplos de Request e Responses
+## cURLs
 
-### GET - Listar todos
-
-**Request**
-
-```
-curl --location 'http://localhost:9093/api/v1/container-measures'
-```
-
-**Response**
-
-```json
-[
-  {
-    "id": 1,
-    "category": "GLASS",
-    "type": "TASTER",
-    "volumeMl": 100,
-    "description": "Copo degustação pequeno",
-    "active": true,
-    "createdDate": "2025-10-18T15:25:12.887766",
-    "updateDate": "2025-10-18T15:25:12.887766"
-  },
-  {
-    "id": 2,
-    "category": "GLASS",
-    "type": "HALF",
-    "volumeMl": 250,
-    "description": "Copo pequeno de 250 ml",
-    "active": true,
-    "createdDate": "2025-10-18T15:25:12.887766",
-    "updateDate": "2025-10-18T15:25:12.887766"
-  },
-  {
-    "id": 3,
-    "category": "GLASS",
-    "type": "PINT",
-    "volumeMl": 473,
-    "description": "Copo americano padrão 16 oz",
-    "active": true,
-    "createdDate": "2025-10-18T15:25:12.887766",
-    "updateDate": "2025-10-18T15:25:12.887766"
-  },
-  {
-    "id": 4,
-    "category": "GLASS",
-    "type": "IMPERIAL_PINT",
-    "volumeMl": 568,
-    "description": "Pint imperial britânico (20 oz)",
-    "active": true,
-    "createdDate": "2025-10-18T15:25:12.887766",
-    "updateDate": "2025-10-18T15:25:12.887766"
-  },
-  {
-    "id": 5,
-    "category": "GLASS",
-    "type": "TULIP",
-    "volumeMl": 330,
-    "description": "Copo tipo tulipa para cervejas belgas",
-    "active": true,
-    "createdDate": "2025-10-18T15:25:12.887766",
-    "updateDate": "2025-10-18T15:25:12.887766"
-  },
-  {
-    "id": 6,
-    "category": "GLASS",
-    "type": "SNIFTER",
-    "volumeMl": 300,
-    "description": "Copo globo para cervejas encorpadas",
-    "active": true,
-    "createdDate": "2025-10-18T15:25:12.887766",
-    "updateDate": "2025-10-18T15:25:12.887766"
-  },
-  {
-    "id": 7,
-    "category": "GLASS",
-    "type": "WEIZEN",
-    "volumeMl": 500,
-    "description": "Copo alto para cervejas de trigo",
-    "active": true,
-    "createdDate": "2025-10-18T15:25:12.887766",
-    "updateDate": "2025-10-18T15:25:12.887766"
-  },
-  {
-    "id": 8,
-    "category": "GLASS",
-    "type": "STEIN",
-    "volumeMl": 1000,
-    "description": "Caneca tradicional alemã de 1 litro",
-    "active": true,
-    "createdDate": "2025-10-18T15:25:12.887766",
-    "updateDate": "2025-10-18T15:25:12.887766"
-  },
-  {
-    "id": 9,
-    "category": "BOTTLE",
-    "type": "STUBBY",
-    "volumeMl": 330,
-    "description": "Garrafa padrão 330 ml",
-    "active": true,
-    "createdDate": "2025-10-18T15:25:12.887766",
-    "updateDate": "2025-10-18T15:25:12.887766"
-  },
-  {
-    "id": 10,
-    "category": "BOTTLE",
-    "type": "BOMBER",
-    "volumeMl": 650,
-    "description": "Garrafa 650 ml",
-    "active": true,
-    "createdDate": "2025-10-18T15:25:12.887766",
-    "updateDate": "2025-10-18T15:25:12.887766"
-  },
-  {
-    "id": 11,
-    "category": "BOTTLE",
-    "type": "CROWLER",
-    "volumeMl": 950,
-    "description": "Lata grande de 950 ml (crowler)",
-    "active": true,
-    "createdDate": "2025-10-18T15:25:12.887766",
-    "updateDate": "2025-10-18T15:25:12.887766"
-  },
-  {
-    "id": 12,
-    "category": "BOTTLE",
-    "type": "HOWLER",
-    "volumeMl": 950,
-    "description": "Garrafa intermediária de 950 ml",
-    "active": true,
-    "createdDate": "2025-10-18T15:25:12.887766",
-    "updateDate": "2025-10-18T15:25:12.887766"
-  },
-  {
-    "id": 13,
-    "category": "BOTTLE",
-    "type": "GROWLER",
-    "volumeMl": 1890,
-    "description": "Garrafa refill de 1.89 litros",
-    "active": true,
-    "createdDate": "2025-10-18T15:25:12.887766",
-    "updateDate": "2025-10-18T15:25:12.887766"
-  },
-  {
-    "id": 14,
-    "category": "KEG",
-    "type": "MINI_KEG",
-    "volumeMl": 5000,
-    "description": "Mini barril doméstico 5L",
-    "active": true,
-    "createdDate": "2025-10-18T15:25:12.887766",
-    "updateDate": "2025-10-18T15:25:12.887766"
-  },
-  {
-    "id": 15,
-    "category": "KEG",
-    "type": "GROWLER",
-    "volumeMl": 2000,
-    "description": "Growler pressurizado 2L",
-    "active": true,
-    "createdDate": "2025-10-18T15:25:12.887766",
-    "updateDate": "2025-10-18T15:25:12.887766"
-  },
-  {
-    "id": 16,
-    "category": "KEG",
-    "type": "CROWLER",
-    "volumeMl": 950,
-    "description": "Lata pressurizada 950 ml para chope artesanal",
-    "active": true,
-    "createdDate": "2025-10-18T15:25:12.887766",
-    "updateDate": "2025-10-18T15:25:12.887766"
-  }
-]
-```
-
-### GET - Buscar com Filtro
+### GET /list
 
 **Request**
 
-* Filtrar por: Categoria
-
 ```
-curl --location 'http://localhost:8080/api/v1/container-measures?category=BOTTLE'
-```
-
-* Filtrar por: Tipo
-
-```
-curl --location 'http://localhost:8080/api/v1/container-measures?type=HALF'
-```
-
-* Filtrar por: Disponibilidade
-
-```
-curl --location 'http://localhost:8080/api/v1/container-measures?active=true'
-```
-
-* Filtrar por: Categoria, Tipo e Disponibilidade
-
-```
-curl --location 'http://localhost:8080/api/v1/container-measures?category=GLASS&type=PINT&active=true'
-```
-
-* Filtrar por: ID
-
-```
-curl --location 'http://localhost:8080/api/v1/container-measures/2'
+curl --location 'http://localhost:8080/api/v1/container-measures/list?category=GLASS&type=PINT&volume=300&active=true&minVolume=100&maxVolume=500&page=0&size=10' \
+--header 'Accept: application/json'
 ```
 
 **Response**
-
-* Filtrar por: Categoria (BOTTLE)
-
-```json
-[
-  {
-    "id": 9,
-    "category": "BOTTLE",
-    "type": "STUBBY",
-    "volumeMl": 330,
-    "description": "Garrafa padrão 330 ml",
-    "active": true,
-    "createdDate": "2025-10-19T19:24:05.788425",
-    "updateDate": "2025-10-19T19:24:05.788425"
-  },
-  {
-    "id": 10,
-    "category": "BOTTLE",
-    "type": "BOMBER",
-    "volumeMl": 650,
-    "description": "Garrafa 650 ml",
-    "active": true,
-    "createdDate": "2025-10-19T19:24:05.788425",
-    "updateDate": "2025-10-19T19:24:05.788425"
-  },
-  {
-    "id": 11,
-    "category": "BOTTLE",
-    "type": "CROWLER",
-    "volumeMl": 950,
-    "description": "Lata grande de 950 ml (crowler)",
-    "active": true,
-    "createdDate": "2025-10-19T19:24:05.788425",
-    "updateDate": "2025-10-19T19:24:05.788425"
-  },
-  {
-    "id": 12,
-    "category": "BOTTLE",
-    "type": "HOWLER",
-    "volumeMl": 950,
-    "description": "Garrafa intermediária de 950 ml",
-    "active": true,
-    "createdDate": "2025-10-19T19:24:05.788425",
-    "updateDate": "2025-10-19T19:24:05.788425"
-  },
-  {
-    "id": 13,
-    "category": "BOTTLE",
-    "type": "GROWLER",
-    "volumeMl": 1890,
-    "description": "Garrafa refill de 1.89 litros",
-    "active": true,
-    "createdDate": "2025-10-19T19:24:05.788425",
-    "updateDate": "2025-10-19T19:24:05.788425"
-  }
-]
-```
-
-* Filtrar por: Tipo (HALF)
-
-```json
-[
-  {
-    "id": 2,
-    "category": "GLASS",
-    "type": "HALF",
-    "volumeMl": 250,
-    "description": "Copo pequeno de 250 ml",
-    "active": true,
-    "createdDate": "2025-10-19T19:24:05.788425",
-    "updateDate": "2025-10-19T19:24:05.788425"
-  }
-]
-```
-
-* Filtrar por: Categoria, Tipo e Disponibilidade
-
-```json
-[
-  {
-    "id": 3,
-    "category": "GLASS",
-    "type": "PINT",
-    "volumeMl": 473,
-    "description": "Copo americano padrão 16 oz",
-    "active": true,
-    "createdDate": "2025-10-19T19:24:05.788425",
-    "updateDate": "2025-10-19T19:24:05.788425"
-  }
-]
-```
-
-* Filtrar por: ID (2)
 
 ```json
 {
-  "id": 2,
-  "category": "GLASS",
-  "type": "HALF",
-  "volumeMl": 250,
-  "description": "Copo pequeno de 250 ml",
-  "active": true,
-  "createdDate": "2025-10-19T19:24:05.788425",
-  "updateDate": "2025-10-19T19:24:05.788425"
+  "content": [],
+  "pageable": {
+    "pageNumber": 0,
+    "pageSize": 10,
+    "sort": {
+      "empty": false,
+      "unsorted": false,
+      "sorted": true
+    },
+    "offset": 0,
+    "unpaged": false,
+    "paged": true
+  },
+  "last": true,
+  "totalPages": 0,
+  "totalElements": 0,
+  "size": 10,
+  "number": 0,
+  "first": true,
+  "numberOfElements": 0,
+  "sort": {
+    "empty": false,
+    "unsorted": false,
+    "sorted": true
+  },
+  "empty": true
 }
 ```
 
-### POST - Cadastrar
+### GET /list - filtro por categoria
 
 **Request**
 
 ```
+curl --location 'http://localhost:8093/api/v1/container-measures/list?category=GLASS' \
+--header 'Accept: application/json'
 ```
 
 **Response**
 
 ```json
-```
-
-### PUT - Atualizar
-
-**Request**
-
-```
-```
-
-**Response**
-
-```json
-```
-
-### DELETE - Excluir
-
-**Request**
-
-```
-```
-
-**Response**
-
-```json
+{
+  "content": [
+    {
+      "id": 2,
+      "category": "GLASS",
+      "type": "HALF",
+      "volumeMl": 250,
+      "description": "Copo pequeno de 250 ml",
+      "active": true,
+      "createdDate": "2025-10-20T22:48:14.660834",
+      "updateDate": "2025-10-20T22:48:14.660834"
+    },
+    {
+      "id": 4,
+      "category": "GLASS",
+      "type": "IMPERIAL_PINT",
+      "volumeMl": 568,
+      "description": "Pint imperial britânico (20 oz)",
+      "active": true,
+      "createdDate": "2025-10-20T22:48:14.660834",
+      "updateDate": "2025-10-20T22:48:14.660834"
+    },
+    {
+      "id": 3,
+      "category": "GLASS",
+      "type": "PINT",
+      "volumeMl": 473,
+      "description": "Copo americano padrão 16 oz",
+      "active": true,
+      "createdDate": "2025-10-20T22:48:14.660834",
+      "updateDate": "2025-10-20T22:48:14.660834"
+    },
+    {
+      "id": 6,
+      "category": "GLASS",
+      "type": "SNIFTER",
+      "volumeMl": 300,
+      "description": "Copo globo para cervejas encorpadas",
+      "active": true,
+      "createdDate": "2025-10-20T22:48:14.660834",
+      "updateDate": "2025-10-20T22:48:14.660834"
+    },
+    {
+      "id": 8,
+      "category": "GLASS",
+      "type": "STEIN",
+      "volumeMl": 1000,
+      "description": "Caneca tradicional alemã de 1 litro",
+      "active": true,
+      "createdDate": "2025-10-20T22:48:14.660834",
+      "updateDate": "2025-10-20T22:48:14.660834"
+    },
+    {
+      "id": 1,
+      "category": "GLASS",
+      "type": "TASTER",
+      "volumeMl": 100,
+      "description": "Copo degustação pequeno",
+      "active": true,
+      "createdDate": "2025-10-20T22:48:14.660834",
+      "updateDate": "2025-10-20T22:48:14.660834"
+    },
+    {
+      "id": 5,
+      "category": "GLASS",
+      "type": "TULIP",
+      "volumeMl": 330,
+      "description": "Copo tipo tulipa para cervejas belgas",
+      "active": true,
+      "createdDate": "2025-10-20T22:48:14.660834",
+      "updateDate": "2025-10-20T22:48:14.660834"
+    },
+    {
+      "id": 7,
+      "category": "GLASS",
+      "type": "WEIZEN",
+      "volumeMl": 500,
+      "description": "Copo alto para cervejas de trigo",
+      "active": true,
+      "createdDate": "2025-10-20T22:48:14.660834",
+      "updateDate": "2025-10-20T22:48:14.660834"
+    }
+  ],
+  "pageable": {
+    "pageNumber": 0,
+    "pageSize": 10,
+    "sort": {
+      "empty": false,
+      "unsorted": false,
+      "sorted": true
+    },
+    "offset": 0,
+    "unpaged": false,
+    "paged": true
+  },
+  "last": true,
+  "totalPages": 1,
+  "totalElements": 8,
+  "size": 10,
+  "number": 0,
+  "first": true,
+  "numberOfElements": 8,
+  "sort": {
+    "empty": false,
+    "unsorted": false,
+    "sorted": true
+  },
+  "empty": false
+}
 ```
